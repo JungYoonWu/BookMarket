@@ -100,4 +100,33 @@ public class ConsoleView {
 	   System.out.print(">> 삭제할 도서의 수량을 입력하세요: ");
 	   return input.nextInt();
    }
+
+public int selectBookId(Cart cart) {
+	Scanner input = new Scanner(System.in);
+    boolean result;
+    int bookId;
+    do {
+       System.out.println("도서의 ID 입력하세요 : ");
+       bookId = input.nextInt();
+       result = cart.isValidBook(bookId);
+       if(!result) {
+          System.out.println("잘못된 도서 ID입니다. ");
+           }
+    }while(!result);
+    
+    return bookId;
+}
+
+public int inputNumber(int min, int max) {
+	Scanner input = new Scanner(System.in);
+	int number;
+	do {
+		System.out.println(">> 수량 입력 (" + min + " ~ " + max + "): ");
+		number = input.nextInt();
+		if(number < min || number > max) {
+			System.out.println("잘못된 수량입니다.");
+		}
+	}while(number < min || number > max);
+	return number;
+}
 }

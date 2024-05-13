@@ -11,7 +11,7 @@ public class BookMarketController {
    BookStorage mBookStorage;
    Cart mCart;
    String[] menuList = {
-      "0. 종료", "1. 도서 정보 보기", "2. 장바구니 보기", "3. 장바구니 에 도서담기", "4. 장바구니 비우기", "5. 장바구니 도서 삭제"   
+      "0. 종료", "1. 도서 정보 보기", "2. 장바구니 보기", "3. 장바구니 에 도서추가", "4. 장바구니 도서 삭제", "5. 장바구니 도서 수량 변경", "6. 장바구니 비우기", "7. 주문"   
    };
 
    public BookMarketController(BookStorage bookStorage, Cart cart, ConsoleView view) {
@@ -29,27 +29,46 @@ public class BookMarketController {
          menu = view.selectMenu(menuList);
          
          switch(menu) {
-         case 1:
-            viewBookInfo();
-            break;
-         case 2:
-            viewCart();
-            break;
-         case 3:
-            addBook2Cart();
-            break;
-         case 4:
-            resetCart();
-            break;
-         case 5:
-        	 removeBookFromCart();
-        	 break;
+         case 1 -> viewBookInfo();
+         case 2 -> viewCart();
+         case 3 -> addBook2Cart();
+         case 4 -> deleteBookInCart();
+         case 5 -> updateBookInCart();
+         case 6 -> resetCart();
          }
       }while(menu != 0);
       view.showMessage(">> YoonWu Book Market을 종료합니다.");
    }
 
-   private void resetCart() {
+private void updateBookInCart() {
+	// 장바구니 보여주기
+	view.displayCart(mCart);
+	if(!mCart.isEmpty()) {
+		// 도서 ID 입력 받기
+		int bookId = view.selectBookId(mCart);
+		// 수량 입력받기
+		int quantity = view.inputNumber(0, mBookStorage.getMaxQuantity());
+		// 도서 ID에 해당하는 cartItem 가져와서
+		// cartItem quantity set 수량
+		mCart.updateQuantity(bookId, quantity);
+	}
+	
+}
+
+private void deleteBookInCart() {
+	//장바구니 보여주기
+	view.displayCart(mCart);
+	if(!mCart.isEmpty()) {
+		//도서 ID입력
+		int bookId = view.selectBookId(mCart);
+		if(view.askConfirm(">> 해당 도서를 삭제하려면 yes를 입력하세요 : ", "yes")) {
+			mCart.deleteItem(bookId);
+			view.showMessage("해당도서를 삭제했습니다.");
+		}
+	}
+}
+
+private void resetCart() {
       view.displayCart(mCart);
       if(!mCart.isEmpty()) {
          if(view.askConfirm(">> 장바구니를 비우려면 yes를 입력하세요. : ","yes")) {
@@ -62,7 +81,7 @@ public class BookMarketController {
       }
    }
    
-   private void removeBookFromCart() {
+/*   private void removeBookFromCart() {
 	   view.displayCart(mCart);
 	   int bookId = view.askForBookIdToRemove();
 	   int quantityToRemove = view.askForQuantityToRemove();
@@ -79,7 +98,7 @@ public class BookMarketController {
 	   }
 	   
    }
-
+*/
    private void addBook2Cart() {
       view.displayBookInfo(mBookStorage);
       int bookId = view.selectBookId(mBookStorage);

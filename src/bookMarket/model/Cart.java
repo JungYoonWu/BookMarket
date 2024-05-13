@@ -3,24 +3,14 @@ package bookMarket.model;
 import java.util.ArrayList;
 
 public class Cart {
-/*주석이 ver0.5 itemList를 ArrayList로 바꿈 이전버전은 우선 주석으로 남김*/
+
    private ArrayList<CartItem> itemList = new ArrayList<>();
-//   private CartItem[] itemList = new CartItem[64];
-//   private int numItems = 0;
+
    
    public ArrayList<CartItem> getItemList(){
 	   return itemList;
    }
-   /*public CartItem[] getItemList() {
-      return itemList;
-   }*/
    
-   
-   /*
-   public void setItemList(CartItem[] itemList) {
-      this.itemList = itemList;
-   }*/
-
    public boolean isEmpty() {
       return itemList.isEmpty();
    }
@@ -32,10 +22,7 @@ public class Cart {
    public String getItemInfo(int index) {
 	      return itemList.get(index).toString();
 	   }
-   /*
-   public String getItemInfo(int index) {
-      return itemList[index].toString();
-   }*/
+ 
    
    public void addItem(Book book) {
 	      CartItem item = getCartItem(book);
@@ -46,16 +33,7 @@ public class Cart {
 	      }
 	   
 	   }
-   /*
-   public void addItem(Book book) {
-      CartItem item = getCartItem(book);
-      if(item == null) {
-         itemList[numItems++] = new CartItem(book);
-      }else {
-         item.addQuantity(1);
-      }
-   
-   }*/
+  
    
    private CartItem getCartItem(Book book) {
 	   for(CartItem item : itemList) {
@@ -65,24 +43,12 @@ public class Cart {
 	   }
 	      return null;
    }
-   /*
-   private CartItem getCartItem(Book book) {
-      for(int i = 0; i < numItems; i++) {
-         if(itemList[i].getBook() == book) {
-            return itemList[i];
-         }
-      }
-      return null;
-   }*/
+   
    
    public void resetCart() {
 	      itemList.clear();
 	   }
-   /*
-   public void resetCart() {
-      numItems = 0;
-      this.itemList = new CartItem[64];
-   }*/
+   
    
    //책을 장바구니에서 제거하는 메서드
    public void removeItem(int bookId, int quantityToRemove) {
@@ -103,5 +69,39 @@ public class Cart {
 	   }
 	   
    }
+
+
+public boolean isValidBook(int bookId) {
+	for(CartItem item : itemList) {
+		if(item.getBook().getBookId() == bookId) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
+public void deleteItem(int bookId) {
+	CartItem item = getCartItem(bookId);
+	itemList.remove(item);
+}
+
+private CartItem getCartItem(int bookId) {
+	for(CartItem item : itemList) {
+		if(item.getBook().getBookId() == bookId) {
+			return item;
+		}
+	}
+	return null;
+}
+
+public void updateQuantity(int bookId, int quantity) {
+	if(quantity == 0) {
+		deleteItem(bookId);
+	}else {
+		CartItem item = getCartItem(bookId);
+		item.setQuantity(quantity);
+	}
+}
 
 }
