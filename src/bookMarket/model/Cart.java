@@ -6,7 +6,7 @@ public class Cart {
 /*주석이 ver0.5 itemList를 ArrayList로 바꿈 이전버전은 우선 주석으로 남김*/
    private ArrayList<CartItem> itemList = new ArrayList<>();
 //   private CartItem[] itemList = new CartItem[64];
-   private int numItems = 0;
+//   private int numItems = 0;
    
    public ArrayList<CartItem> getItemList(){
 	   return itemList;
@@ -15,24 +15,18 @@ public class Cart {
       return itemList;
    }*/
    
-   public void setItemList(ArrayList<CartItem> itemList) {
-	   this.itemList = itemList;
-   }
+   
    /*
    public void setItemList(CartItem[] itemList) {
       this.itemList = itemList;
    }*/
-   
-   public void setNumItems(int numItems) {
-      this.numItems = numItems;
-   }
 
    public boolean isEmpty() {
-      return numItems==0;
+      return itemList.isEmpty();
    }
 
    public int getNumItems() {
-      return numItems;
+      return itemList.size();
    }
    
    public String getItemInfo(int index) {
@@ -47,7 +41,6 @@ public class Cart {
 	      CartItem item = getCartItem(book);
 	      if(item == null) {
 	         itemList.add(new CartItem(book));
-	         numItems++;
 	      }else {
 	         item.addQuantity(1);
 	      }
@@ -83,7 +76,6 @@ public class Cart {
    }*/
    
    public void resetCart() {
-	      numItems = 0;
 	      itemList.clear();
 	   }
    /*
@@ -102,7 +94,6 @@ public class Cart {
 			   //입력받은 수량만큼 해당 책을 제거
 			   if(currentQuantity <= quantityToRemove) {
 				   itemList.remove(i);
-				   numItems--;
 				   return;
 			   }else {
 				   item.setQuantity(currentQuantity - quantityToRemove);
