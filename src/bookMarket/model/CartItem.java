@@ -28,7 +28,11 @@ public class CartItem {
 
    @Override
    public String toString() {
-      return book.getBookId() + "," + book.getTitle()+", " + quantity + "권";
+      return book.getBookId() + "," + book.getTitle()+", " + quantity + "권, " + getPrice() +"원";
+   }
+
+   public int getPrice() {
+	   return this.quantity * book.getPrice();
    }
    
    

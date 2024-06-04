@@ -1,10 +1,19 @@
 package bookMarket.model;
 
-public class Customer extends User{
-
-	public Customer(String userId, String userName, String email) {
-		super(userId, userName, email);
-		// TODO Auto-generated constructor stub
+public class Customer extends User {
+	private String address;
+	private String email;
+	
+	public String getAddress() {
+		return address;
 	}
-	//사용자 아이
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }
